@@ -47,6 +47,13 @@ export class AuthService {
     this.user = user; // Set user to be used elsewhere
   }
 
+  // get user for header
+  getUsername() {
+    // return JSON.parse(this.user.username);
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user.username;
+  }
+
 
   // Function to logout
   logout() {
@@ -66,6 +73,11 @@ export class AuthService {
     return this.http.get(this.domain + '/authentication/profile', this.options).map(res => res.json());
   }
 
+  // Function to get public profile data
+  getPublicProfile(username) {
+    this.createAuthenticationHeaders(); // Create headers before sending to API
+    return this.http.get(this.domain + '/authentication/publicProfile/' + username, this.options).map(res => res.json());
+  }
 
 
 
